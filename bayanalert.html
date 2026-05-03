@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />  <meta name="theme-color" content="#D4AA00" />
+  <meta name="description" content="Community Emergency Reporting & Response System for Brgy Sta Rita" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="BayanAlert" />
+  <link rel="manifest" href="./manifest.json" />  <title>BayanAlert</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css\" />
+  <link rel="stylesheet" href="bayanalert.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#heroSection">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span>BayanAlert</span>
+      </a>
+
+      <nav class="top-nav">
+        <a class="nav-btn nav-btn-dark" href="#dashboardSection">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Live Dashboard</span>
+        </a>
+        <a class="nav-btn nav-btn-red" href="#reportSection">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          <span>Report Emergency</span>
+        </a>
+      </nav>
+    </div>
+    <div class="topbar-accent"></div>
+  </header>
+
+  <section id="heroSection" class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <h1>BayanAlert</h1>
+        <h2>Community Emergency Reporting &amp; Response System</h2>
+        <p>
+          BayanAlert is a web-based community emergency reporting and response system designed to improve how incidents
+          are reported and managed at the barangay level. Its main purpose is to provide residents with a fast and
+          accessible platform to submit emergency reports with automatic location tagging and real-time updates. The
+          system aims to solve delays caused by traditional verbal or phone-based reporting methods. By centralizing
+          reports in a live monitoring dashboard, BayanAlert enhances coordination, speeds up response time, and
+          strengthens communication between residents and local officials.
+        </p>
+
+        <a class="hero-cta" href="#reportSection">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          <span>Report an Emergency Now</span>
+        </a>
+      </div>
+
+      <div class="hero-icon-wrap" aria-hidden="true">
+        <i class="fa-solid fa-bell"></i>
+      </div>
+    </div>
+  </section>
+
+  <section id="dashboardSection" class="section section-gray">
+    <div class="container narrow">
+      <h2 class="section-title">Live Emergency Dashboard</h2>
+
+      <div class="stats-grid">
+        <article class="stat-card">
+          <div id="totalReports" class="stat-number">0</div>
+          <div class="stat-label">Total Reports</div>
+        </article>
+        <article class="stat-card">
+          <div id="activeReports" class="stat-number">0</div>
+          <div class="stat-label">Active Reports</div>
+        </article>
+        <article class="stat-card">
+          <div id="resolvedReports" class="stat-number">0</div>
+          <div class="stat-label">Resolved Reports</div>
+        </article>
+      </div>
+
+      <div class="reports-panel">
+        <div class="reports-actions">
+          <button id="clearResolvedBtn" class="btn btn-dark" type="button">
+            <i class="fa-solid fa-broom"></i>
+            <span>Clear Resolved</span>
+          </button>
+          <button id="resetReportsBtn" class="btn btn-red" type="button">
+            <i class="fa-solid fa-trash-can"></i>
+            <span>Reset All Reports</span>
+          </button>
+        </div>
+        <div id="reportsList" class="reports-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reportSection" class="section section-gray">
+    <div class="container narrow">
+      <h2 class="section-title">Submit an Emergency Report</h2>
+
+      <form id="reportForm" class="report-form" novalidate>
+        <div class="field">
+          <label for="incidentType">Incident Type *</label>
+          <select id="incidentType" required>
+            <option value="">Select an incident type</option>
+            <option value="Fire">🔥 Fire</option>
+            <option value="Medical Emergency">🚑 Medical Emergency</option>
+            <option value="Crime/Security">🚓 Crime/Security</option>
+            <option value="Flood/Water Hazard">💧 Flood/Water Hazard</option>
+            <option value="Accident">⚠️ Accident</option>
+            <option value="Other">⚠️ Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="locationInput">Location *</label>
+          <div class="inline-field">
+            <input id="locationInput" type="text" placeholder="Click 'Get Location' to detect your location in Sta Rita" required />
+            <button id="getLocationBtn" class="btn btn-dark" type="button">
+              <i class="fa-solid fa-location-dot"></i>
+              <span>Get Location</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="descriptionInput">Description *</label>
+          <textarea id="descriptionInput" rows="4" maxlength="500" placeholder="Provide details about the emergency (minimum 10 characters)" required></textarea>
+          <div class="chars"><span id="charCount">0</span>/500 characters</div>
+        </div>
+
+        <div class="field">
+          <label for="contactInput">Contact Number *</label>
+          <input id="contactInput" type="text" placeholder="09XXXXXXXXX" maxlength="11" required />
+        </div>
+
+        <label class="agree-line" for="consentInput">
+          <input id="consentInput" type="checkbox" checked required />
+          <span>I agree to the terms and conditions and consent to emergency responders contacting me</span>
+        </label>
+
+        <button class="btn btn-red submit-btn" type="submit">
+          <i class="fa-solid fa-paper-plane"></i>
+          <span>Submit Emergency Report</span>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <section class="section section-gray features-section">
+    <div class="container narrow">
+      <h2 class="section-title">Why Choose BayanAlert?</h2>
+
+      <div class="features-grid">
+        <article class="feature-card">
+          <i class="fa-solid fa-bolt"></i>
+          <h3>Lightning Fast</h3>
+          <p>Instant emergency reporting that eliminates delays from traditional phone-based methods</p>
+        </article>
+        <article class="feature-card">
+          <i class="fa-solid fa-map-location-dot"></i>
+          <h3>Auto Location Tagging</h3>
+          <p>Automatic GPS detection ensures responders know exactly where you are</p>
+        </article>
+        <article class="feature-card">
+          <i class="fa-solid fa-chart-line"></i>
+          <h3>Real-time Dashboard</h3>
+          <p>Live monitoring of all emergencies for better coordination and faster response</p>
+        </article>
+        <article class="feature-card">
+          <i class="fa-solid fa-handshake-angle"></i>
+          <h3>Community Centered</h3>
+          <p>Strengthens communication between residents and local officials at barangay level</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>&copy; <span id="yearNow"></span> BayanAlert. All rights reserved.</p>
+    <p>Emergency Hotline: 911 | BayanAlert Support: 1-800-BAYAN</p>
+  </footer>
+
+  <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="bayanalert.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').catch(err => console.log('Service Worker registration failed:', err));
+    }
+  </script>
+</body>
+</html>
